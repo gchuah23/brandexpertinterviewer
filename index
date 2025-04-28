@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerald Chuah - The Story Whisperer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for smooth scrolling and animations */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #333333; /* Neutral Dark from Brand Kit */
+            background-color: #F5F5F5; /* Neutral Light from Brand Kit */
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            color: #1F4E79; /* Primary Blue from Brand Kit */
+        }
+        .section {
+            padding: 80px 20px; /* Add padding to sections */
+            min-height: 100vh; /* Ensure sections take at least full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hero-background {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://placehold.co/1920x1080/1F4E79/C69C6D?text=Captivating+Stories') center center / cover no-repeat; /* Placeholder background image */
+            filter: brightness(0.8); /* Subtle filter */
+            position: relative; /* Needed for absolute positioning of the photo */
+        }
+        .btn-primary {
+            background-color: #1F4E79; /* Primary Blue */
+            color: #F5F5F5; /* Neutral Light */
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover {
+            background-color: #2a6ea6; /* Slightly lighter blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.15);
+        }
+        .nav-link {
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #C69C6D; /* Secondary Gold */
+            transform: translateY(-2px);
+        }
+        .nav-link.active {
+            color: #C69C6D; /* Secondary Gold */
+            font-weight: 600;
+        }
+        input, textarea {
+            border-radius: 8px;
+            border: 1px solid #d1d5db; /* Tailwind gray-300 */
+            padding: 10px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #1F4E79; /* Primary Blue */
+            box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.2); /* Focus ring */
+        }
+        /* Animation for elements on scroll */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom style for the gold separator */
+        .gold-separator {
+            width: 80px;
+            height: 4px;
+            background-color: #C69C6D; /* Secondary Gold */
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+
+        /* Style for the celebrity name capsules */
+        .celebrity-capsule {
+            background-color: #1F4E79; /* Primary Blue */
+            color: #F5F5F5; /* Neutral Light - Changed from white for readability */
+            padding: 8px 16px;
+            border-radius: 9999px; /* Full rounded */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: inline-block; /* Needed for margin/padding and hover effect */
+            text-decoration: none; /* Remove underline from link */
+        }
+        .celebrity-capsule:hover {
+            background-color: #C69C6D; /* Secondary Gold */
+            color: #1F4E79; /* Primary Blue on hover */
+        }
+
+        /* Style for the profile photo in hero */
+        .profile-photo {
+            width: 150px; /* Adjust size as needed */
+            height: 150px; /* Adjust size as needed */
+            border-radius: 50%; /* Make it circular */
+            border: 5px solid #C69C6D; /* Gold border */
+            object-fit: cover; /* Ensure the image covers the area */
+            margin-bottom: 20px; /* Space below the photo */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+         /* Center content in hero */
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 10; /* Ensure content is above background */
+            position: relative;
+        }
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <nav class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 shadow-lg z-50 backdrop-blur-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#hero" class="text-2xl font-bold text-primary-blue hover:text-secondary-gold transition duration-300">Gerald Chuah</a>
+            <div class="flex space-x-6">
+                <a href="#about" class="nav-link text-gray-700 hover:text-primary-blue">About</a>
+                <a href="#services" class="nav-link text-gray-700 hover:text-primary-blue">Services</a>
+                <a href="#interviews" class="nav-link text-gray-700 hover:text-primary-blue">Interviews</a>
+                <a href="#achievements" class="nav-link text-gray-700 hover:text-primary-blue">Achievements</a>
+                <a href="#contact" class="nav-link text-gray-700 hover:text-primary-blue">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header id="hero" class="section hero-background text-white flex items-center justify-center min-h-screen">
+        <div class="container mx-auto px-6 hero-content fade-in-up">
+             <img src="uploaded:Gerald Chuah Photo Circle Transparent.jpg-eb0a4deb-0fc0-4fa4-92d0-af45da4bdd79"
+                 alt="Gerald Chuah Profile Photo"
+                 class="profile-photo"
+                 onerror="this.onerror=null; this.src='https://placehold.co/150x150/C69C6D/1F4E79?text=GC'"> <h1 class="text-5xl md:text-7xl font-bold mb-4 drop-shadow-lg">You Have a Powerful Story. I'm Here to Listen.</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto drop-shadow-md">
+                As an experienced journalist, I don't just write. I listen for the unique gems that make your story shine, the passion behind your purpose, and the value you bring to the world.
+            </p>
+            <a href="#contact" class="btn-primary inline-block text-lg">Let's Uncover Your Story →</a>
+        </div>
+    </header>
+
+    <section id="about" class="section bg-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="text-4xl font-bold text-center mb-4 fade-in-up">About Gerald Chuah & My Approach</h2>
+            <div class="gold-separator fade-in-up delay-100"></div>
+            <p class="text-lg text-gray-700 text-center mb-8 fade-in-up delay-200">
+                Based in Kuala Lumpur, Gerald Chuah is the go-to pro for turning complex ideas into compelling narratives. With 25+ years in print, digital and broadcast journalism—and as founder of Brandizing Solutions—he helps leaders, innovators and brands tell stories that stick.
+            </p>
+            <div class="grid md:grid-cols-1 gap-10 mt-12">
+                <div class="card fade-in-up delay-300">
+                    <h3 class="text-2xl font-semibold mb-4">My Philosophy: Listening First</h3>
+                    <p class="text-gray-700">
+                        As a longtime journalist, I know that not everyone is articulate or knows how to express themselves—especially when it comes to talking about their brand, products, or services. It can be quite a hassle, and you can spend long hours toiling at it without getting to the point. It’s not your fault, because not everyone is born a writer, and when it comes to putting your thoughts into writing, there’s always a fear of making mistakes. That’s what stops most people from sharing their wisdom and knowledge, so they end up doing the bare minimum without telling the world who they really are or what they’re capable of achieving.
+                        <br><br>
+                        That’s where the role of a writer comes into play. A writer is not just a machine or a typewriter; a writer also listens, finds your voice, and understands your journey, struggles, beliefs, and unique selling points—those gems that make you different from your competitors. That’s where your true value lies. It can be hard to praise yourself in that way—you need someone to give you a listening ear and truly understand your story before telling it to the world. My job is to help you be natural, be yourself, and be powerful—not by exaggerating, but by ensuring your story is never boring.
+                    </p>
+                </div>
+                <div class="card fade-in-up delay-400">
+                    <h3 class="text-2xl font-semibold mb-4">Experience</h3>
+                    <p class="text-gray-700">Over 25 years crafting compelling stories for print, digital, and broadcast outlets. Founder of Brandizing Solutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section bg-gray-100">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <h2 class="text-4xl font-bold text-center mb-4 fade-in-up">What I Offer</h2>
+            <div class="gold-separator fade-in-up delay-100"></div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                <div class="card fade-in-up delay-200">
+                    <h3 class="text-2xl font-semibold mb-3">Brand Profiles & Thought-Leader Features</h3>
+                    <p class="text-gray-700">In-depth storytelling that humanizes your leadership and mission, building credibility and connection.</p>
+                </div>
+                <div class="card fade-in-up delay-300">
+                    <h3 class="text-2xl font-semibold mb-3">Long-form & SEO Content</h3>
+                    <p class="text-gray-700">Blog articles, white papers, and press releases tailored for search engine visibility and maximum shareability.</p>
+                </div>
+                <div class="card fade-in-up delay-400">
+                    <h3 class="text-2xl font-semibold mb-3">Scriptwriting & Video Copy</h3>
+                    <p class="text-gray-700">Engaging, platform-optimized scripts for video platforms and corporate webinars.</p>
+                </div>
+                <div class="card fade-in-up delay-500">
+                    <h3 class="text-2xl font-semibold mb-3">Specialized Communication</h3>
+                    <p class="text-gray-700">Translate complex topics into compelling narratives, making them accessible and engaging for your audience.</p>
+                </div>
+                <div class="card fade-in-up delay-600">
+                    <h3 class="text-2xl font-semibold mb-3">Content Strategy & Brand Storytelling</h3>
+                    <p class="text-gray-700">Developing strategic content campaigns, blog series, podcasts, and social media strategies to strengthen brand positioning.</p>
+                </div>
+                <div class="card fade-in-up delay-700">
+                    <h3 class="text-2xl font-semibold mb-3">Consultation & Workflow Design</h3>
+                    <p class="text-gray-700">From website copy structure to content automation, streamlining your editorial operations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="interviews" class="section bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="text-4xl font-bold text-center mb-4 fade-in-up">Featured Interviews</h2>
+            <div class="gold-separator fade-in-up delay-100"></div>
+            <p class="text-lg text-gray-700 text-center mb-12 fade-in-up delay-200">
+                From industry leaders to entertainment icons, here are just some of the remarkable voices Gerald has brought to the page:
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-center fade-in-up delay-300">
+                <a href="https://www.facebook.com/profile/100063333904338/search/?q=chris%20gardner" target="_blank" class="celebrity-capsule">Chris Gardner</a>
+                <a href="https://www.facebook.com/profile/100063333904338/search/?q=marshall%20goldsmith" target="_blank" class="celebrity-capsule">Marshall Goldsmith</a>
+                <a href="https://www.facebook.com/profile/100063333904338/search/?q=lizzie" target="_blank" class="celebrity-capsule">Lizzie Velasquez</a>
+                <a href="https://www.facebook.com/profile/100063333904338/search/?q=joel%20bauer" target="_blank" class="celebrity-capsule">Joel Bauer</a>
+                <a href="https://www.facebook.com/profile/100063333904338/search/?q=manny" target="_blank" class="celebrity-capsule">Manny Pacquiao</a>
+                <a href="https://www.facebook.com/profile/100063333904338/search/?q=jackie%20chan" target="_blank" class="celebrity-capsule">Jackie Chan</a>
+                <a href="https://www.facebook.com/profile/100063333904338/search/?q=Sylvester%20Stallone" target="_blank" class="celebrity-capsule">Sylvester Stallone</a>
+                <a href="https://www.facebook.com/profile/100063333904338/search/?q=Yao%20Ming" target="_blank" class="celebrity-capsule">Yao Ming</a>
+                <a href="https://www.facebook.com/photo?fbid=608374087950383&set=a.606012891519836" target="_blank" class="celebrity-capsule">Jimmy Choo</a>
+                <a href="https://www.facebook.com/photo/?fbid=612886370832488&set=a.417471740373953" target="_blank" class="celebrity-capsule">Anwar Ibrahim</a>
+                </div>
+            <p class="text-center text-gray-600 mt-8 fade-in-up delay-400">...and many more leaders, innovators, and icons.</p>
+        </div>
+    </section>
+
+     <section id="achievements" class="section bg-gray-100">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="text-4xl font-bold text-center mb-4 fade-in-up">Key Achievements</h2>
+            <div class="gold-separator fade-in-up delay-100"></div>
+            <ul class="list-disc list-inside text-lg text-gray-700 space-y-4 mt-12">
+                <li class="fade-in-up delay-200">National recognition for entertainment journalism features.</li>
+                <li class="fade-in-up delay-300">Lead content strategist for the launch of multiple podcast series.</li>
+                <li class="fade-in-up delay-400">Author of “Eye of the Tiger” motivational guide, drawing on Sylvester Stallone’s life lessons.</li>
+                <li class="fade-in-up delay-500">Architect of a daily automated news briefing task for real-time media updates.</li>
+            </ul>
+        </div>
+    </section>
+
+
+    <section id="contact" class="section bg-white">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-4xl font-bold text-center mb-4 fade-in-up">Ready to Share Your Story?</h2>
+            <div class="gold-separator fade-in-up delay-100"></div>
+            <p class="text-lg text-gray-700 text-center mb-8 fade-in-up delay-200">
+                You have a unique story that deserves to be heard. Let's connect, and I'll listen first to understand the heart of your message.
+            </p>
+
+            <form name="contact" method="POST" data-netlify="true" class="space-y-6 fade-in-up delay-300">
+                <input type="hidden" name="form-name" value="contact" />
+                <p class="hidden">
+                    <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+                </p>
+
+                <div>
+                    <label for="name" class="block text-lg font-semibold text-gray-700 mb-2">Name:</label>
+                    <input type="text" id="name" name="name" required class="w-full">
+                </div>
+
+                <div>
+                    <label for="email" class="block text-lg font-semibold text-gray-700 mb-2">Email:</label>
+                    <input type="email" id="email" name="email" required class="w-full">
+                </div>
+
+                <div>
+                    <label for="subject" class="block text-lg font-semibold text-gray-700 mb-2">Subject:</label>
+                    <input type="text" id="subject" name="subject" class="w-full">
+                </div>
+
+                <div>
+                    <label for="message" class="block text-lg font-semibold text-gray-700 mb-2">Message:</label>
+                    <textarea id="message" name="message" rows="6" required class="w-full"></textarea>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn-primary text-lg">Let's Talk</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-primary-blue text-white py-8 text-center">
+        <div class="container mx-auto px-6">
+            <p>&copy; 2025 Gerald Chuah. All rights reserved.</p>
+            <div class="mt-4">
+                 <a href="https://www.linkedin.com/in/geraldchuah" target="_blank" rel="noopener noreferrer" class="text-white hover:text-secondary-gold mx-2 transition duration-300">LinkedIn</a>
+                </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for fade-in-up animation on scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in-up');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            }, {
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // JavaScript for active navigation link highlighting (optional, but nice)
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.5, // Highlight when 50% of the section is visible
+                rootMargin: '-50% 0px -50% 0px' // Adjust margin to center the trigger point
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>
